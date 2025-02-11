@@ -141,6 +141,7 @@ button, .btn {
     height:40px;
     margin-right:10px;
     margin-left:20px;
+    margin-top:20px;
 }
 
 .btn.summarize-btn:hover {
