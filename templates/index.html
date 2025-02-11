@@ -21,25 +21,29 @@
         </div>
 
         <!-- Upload Section -->
-        <section class="upload-section">
-            <form id="uploadForm">
-                <label for="file" class="file-label">
-                    <i class="fas fa-upload"></i> Upload Legal Document
-                </label>
-                <input type="file" id="file" name="file" accept=".txt,.pdf,.docx,.jpeg,.jpg,.png" required>
-                <button type="submit" class="btn summarize-btn">
-                    <i class="fas fa-check"></i> Summarize
-                </button>
-            </form>
-        </section>
+        <!-- Upload Section (Legal Summary Box) -->
+<section class="upload-section" id="uploadSection">
+    <form id="uploadForm">
+        <label for="file" class="file-label">
+            <i class="fas fa-upload"></i> Upload Legal Document
+        </label>
+        <input type="file" id="file" name="file" accept=".txt,.pdf,.docx,.jpeg,.jpg,.png" required>
+        <button type="submit" class="btn summarize-btn">
+            <i class="fas fa-check"></i> Summarize
+        </button>
+    </form>
+</section>
 
-        <!-- Summary Section -->
-        <section class="summary-section">
-            <h2>Summary:</h2>
-            <div id="summaryText" class="summary-text">
-                Your summary will appear here.
-            </div>
-        </section>
+<!-- Summary Section (Initially Hidden) -->
+<section class="summary-section" id="summarySection" style="display: none;">
+    <h2>Summary:</h2>
+    <div id="summaryText" class="summary-text">
+        Your summary will appear here.
+    </div>
+    <button id="backButton" class="btn back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Upload
+    </button>
+</section>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

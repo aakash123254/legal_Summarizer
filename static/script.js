@@ -24,35 +24,67 @@ modeToggleIcon.addEventListener('click', () => {
     }
 });
 
+// Get elements
+const uploadSection = document.getElementById('uploadSection');
+const summarySection = document.getElementById('summarySection');
+const uploadForm = document.getElementById('uploadForm');
+const summaryText = document.getElementById('summaryText');
+const backButton = document.getElementById('backButton');
+const summarizeButton = document.querySelector('.summarize-btn'); // Button for summarizing
+
 // File Upload and Summary Logic
-document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const fileInput = document.getElementById('file');
-    const summaryText = document.getElementById('summaryText');
 
-    // Clear previous summary
-    summaryText.textContent = 'Generating summary...';
+    // Disable button to prevent multiple clicks
+    summarizeButton.disabled = true;
+    summarizeButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
+
+    // Show processing message
+    summaryText.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating summary...`;
 
     // Create FormData object
     const formData = new FormData();
     formData.append('file', fileInput.files[0]);
 
     try {
-        // Send file to backend
-        const response = await fetch('/summarize', {
-            method: 'POST',
-            body: formData,
-        });
+        // Simulate Processing Effect
+        setTimeout(async () => {
+            // Send file to backend
+            const response = await fetch('/summarize', {
+                method: 'POST',
+                body: formData,
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (response.ok) {
-            summaryText.textContent = data.summary || 'No summary generated.';
-        } else {
-            summaryText.textContent = `Error: ${data.error}`;
-        }
+            if (response.ok) {
+                summaryText.textContent = data.summary || 'No summary generated.';
+            } else {
+                summaryText.textContent = `Error: ${data.error}`;
+            }
+
+            // Hide Upload section and Show Summary section
+            uploadSection.style.display = 'none';
+            summarySection.style.display = 'block';
+
+            // Re-enable button after processing
+            summarizeButton.disabled = false;
+            summarizeButton.innerHTML = `<i class="fas fa-check"></i> Summarize`;
+
+        }, 2000); // Simulating a delay of 2 seconds
+
     } catch (error) {
         summaryText.textContent = `Error: ${error.message}`;
+        summarizeButton.disabled = false;
+        summarizeButton.innerHTML = `<i class="fas fa-check"></i> Summarize`;
     }
+});
+
+// Back Button Logic
+backButton.addEventListener('click', () => {
+    uploadSection.style.display = 'block';
+    summarySection.style.display = 'none';
 });
